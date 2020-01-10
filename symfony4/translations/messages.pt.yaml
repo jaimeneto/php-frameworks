@@ -1,0 +1,74 @@
+Users: Usuários
+Posts: Posts
+Comments: Comentários
+Logout: Sair
+Register: Cadastrar-se
+Login: Entrar
+'Previous page': 'Página anterior'
+'Next page': 'Próxima página'
+'Sign in': Entrar
+Save: Salvar
+Cancel: Cancelar
+Edit: Editar
+Delete: Excluir
+'Read more': 'Leia mais'
+'Please sign in': 'Efetue o login'
+Email: 'E-mail'
+Password: Senha
+'Remember me': 'Lembre-se de mim'
+Name: Nome
+'Confirm password': 'Confirme a senha'
+'Passwords do not match': 'As senhas não conferem'
+'User successfully registered': 'Usuário cadastrado com sucesso'
+Id: Id
+'Created at': Criação
+'Updated at': 'Última atualização'
+'Email verified at': Ativação
+'Accessed at': 'Último acesso'
+Type: Tipo
+'Turn user %name% into admin?': 'Deseja tornar %name% administrador?'
+'Turn Into Admin': 'Tornar Admin'
+'Send user %name% to trash?': 'Deseja enviar o usuário %name% para a lixeira?'
+'Restore user %name%?': 'Deseja restaurar o usuário %name%?'
+'Delete user %name% permanently?': 'Deseja excluir o usuário %name%  permanentemente?'
+Restore: Restaurar
+Destroy: Destruir
+'Invalid user!': 'Usuário inválido!'
+'User successfully sent to trash.': 'Usuário enviado para a lixeira com sucesso.'
+'Error trying to delete user!': 'Erro ao tentar excluir usuário!'
+'User successfully restored.': 'Usuário restaurado com sucesso.'
+'Error trying to restore user!': 'Erro ao tentar restaurar usuário!'
+'User successfully turned into admin.': 'Usuário transformado em admin com sucesso.'
+'Error trying to turn user into admin!': 'Erro ao tentar transformar usuário em admin!'
+'Error trying to create post!': 'Erro ao tentar cadastrar o post!'
+'Create Post': 'Cadastrar Post'
+'Invalid post!': 'Post inválido!'
+'Error trying to update post!': 'Erro ao tentar alterar o post!'
+'Edit Post': 'Editar Post'
+'Error trying to delete post!': 'Erro ao tentar excluir post!'
+Back: Voltar
+Create: Cadastrar
+Title: Título
+Author: Autor
+'Delete post?': 'Deseja realmente excluir o post?'
+'There are no posts to display': 'Não há posts para serem exibidos'
+'Post successfully created.': 'Post cadastrado com sucesso.'
+'Post successfully updated.': 'Post alterado com sucesso.'
+'Post successfully deleted.': 'Post excluído com sucesso.'
+'Invalid comment!': 'Comentário inválido!'
+'Comment successfully approved.': 'Comentário aprovado com sucesso.'
+'Error trying to approve comment!': 'Erro ao tentar aprovar o comentário!'
+'Comment successfully deleted.': 'Comentário excluído com sucesso.'
+'Error trying to delete comment!': 'Erro ao tentar excluir o comentário!'
+Text: Texto
+Post: Post
+'Approved at': 'Data de aprovação'
+'Approve comment?': 'Deseja aprovar o comentário?'
+Approve: Aprovar
+'Delete comment?': 'Deseja realmente excluir o comentário?'
+'There are no comments to display': 'Não há comentários para serem exibidos'
+'Comment successfully created.': 'Comentário criado com sucesso.'
+'Pending Approval': 'Pendente de aprovação'
+'You need to login to add your comments!': 'Você precisa se logar para adicionar seus comentários!'
+'Insert your comments here': 'Insira seus comentários aqui'
+Reset: Limpar

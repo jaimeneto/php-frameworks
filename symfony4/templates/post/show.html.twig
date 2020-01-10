@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+ 
+{% block title %}
+  {{ post.title|e }} | {{ parent() }}
+{% endblock %}
+ 
+{% block body %}
+<div class="container">
+  <div class="card">
+    <h3 class="card-header">{{ post.title|e }}</h3>
+    <blockquote 
+      class="card-body lead text-justify">
+      <p class="card-text">
+        {{ post.text|nl2br }}</p>
+      <div class="text-right">
+        <strong>{{ post.user.name|e }}</strong>
+        <small class="text-muted">&minus;
+          {{ post.createdAt|date('d/m/Y H:i') }}
+        </small>
+      </div>
+    </blockquote>
+  </div>
+  <br>
+  {% include 'comment/form.html.twig' %}
+</div>
+{% endblock %}

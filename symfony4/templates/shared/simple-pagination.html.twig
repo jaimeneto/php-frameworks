@@ -1,0 +1,43 @@
+{% set canPrevious = page > 1 %}
+{% set totalPages = (total / limit)|round(0, 'ceil')  %}
+{% set canNext = page < totalPages %}
+ 
+{% if totalPages > 1 %}
+<nav>
+  <ul class="pagination">
+    <li class="page-item 
+      {% if canPrevious == false %}disabled
+      {% endif %}">
+      {% if canPrevious == false %}
+        <span class="page-link">&laquo; 
+            {{ 'Previous page'|trans }}
+        </span>
+      {% else %}
+        <a class="page-link" 
+          aria-label="{{ 'Previous page'|trans }}"
+          href="{{ path(route,{'page':page-1}) }}">
+          <span aria-hidden="true">&laquo; 
+            {{ 'Previous page'|trans }}
+          </span>
+        </a>
+        {% endif %}
+      </li>
+ 
+      <li class="page-item 
+        {% if canNext == false %}disabled
+        {% endif %}">
+        {% if canNext == false %}
+          <span class="page-link"
+            >{{ 'Next page'|trans }} &raquo;</span>
+        {% else %}
+        <a class="page-link" 
+          aria-label="{{ 'Next page'|trans }}"
+          href="{{ path(route,{'page':page+1}) }}">
+          <span aria-hidden="true"
+            >{{ 'Next page'|trans }} &raquo;</span>
+        </a>
+        {% endif %}
+    </li>
+  </ul>
+</nav>
+{% endif %}

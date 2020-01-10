@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+ 
+{% block title %}{{ 'Comments'|trans }} | {{ parent() }}{% endblock %}
+ 
+{% block body %}
+<div class="container">
+  <div class="blog-header">
+    <h2 class="blog-title">
+      {{ 'Comments'|trans }}
+    </h2>
+    <hr>
+  </div>
+ 
+  {% include 'shared/messages.html.twig' %}
+ 
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>{{ 'Id'|trans }}</th>
+        <th>{{ 'Text'|trans }}</th>
+        <th>{{ 'Post'|trans }}</th>
+        <th>{{ 'Author'|trans }}</th>
+        <th>{{ 'Created at'|trans }}</th>
+        <th>{{ 'Approved at'|trans }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for comment in comments %}
+      <tr{{ comment.ApprovedAt ? '' 
+        : ' class="table-danger"' }}>
+        <td>{{ comment.id }}</td>
+        <td>{{ comment.text|truncate(30, true) }}</td>
+        <td>{{ comment.post.title }}</td>
+        <td>{{ comment.user.name }}</td>
+        <td>{{ comment.createdAt|date('d/m/Y H:i:s') }}</td>
+        <td>{{ comment.ApprovedAt 
+          ? comment.ApprovedAt|date('d/m/Y H:i:s') 
+          }}</td>
+        <td class="text-right text-nowrap">
+          {% if comment.ApprovedAt == null %}
+          <a class="btn btn-sm btn-primary"
+            onclick="return confirm('{{ 'Approve comment?'|trans }}')" 
+            href="{{ path('admin_comment_approve', 
+            {commentId: comment.id, page: page}) }}" 
+            >{{ 'Approve'|trans }}</a>
+          {% endif %}
+ 
+          <a class="btn btn-sm btn-danger"
+            onclick="return confirm('{{ 'Delete comment?'|trans }}')"
+            href="{{ path('admin_comment_delete', 
+            {commentId: comment.id, page: page}) }}" >{{ 'Delete'|trans }}</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td class="text-center text-info" 
+          colspan="6">
+          {{ 'There are no comments to display'|trans }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+ 
+  {% include 'shared/pagination.html.twig' with {
+    'route': 'admin_comment_list', 
+    'total': total, 
+    'page': page, 
+    'limit': limit
+  } %}
+</div>
+{% endblock %}

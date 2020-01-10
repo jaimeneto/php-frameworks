@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ pageTitle }} | {{ parent() }}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="blog-header">
+			<h2 class="blog-title">{{ pageTitle }}</h2>
+			<hr>
+		</div>
+		<div>
+			<div>
+				{% for label, messages in app.flashes %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }}" role="alert">
+							<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}
+			</div>
+			<div class="blog-main">
+				{{ form_start(form) }}
+				{{ form_row(form.title) }}
+				{{ form_row(form.text) }}
+				<div class="form-group row">
+					<div class="col-md-6">
+						{{ form_widget(form.submit) }}
+					</div>
+					<div class="col-md-6">
+						<a href="{{ path('admin_post_list', {page: page ?? 1 }) }}" class="form-control btn btn-outline-secondary">{{ 'Back'|trans }}</a>
+					</div>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

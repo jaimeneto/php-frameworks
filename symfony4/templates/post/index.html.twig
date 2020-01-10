@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+ 
+{% block body %}
+<div class="container">
+  <div class="card-deck">
+    {% set i = page == 1 ? 0 : 1 %}
+    {% for post in posts %}
+      {% set i = i+1 %}
+      {% if (i is even) %}
+        </div><br><div class="card-deck">
+      {% endif %}
+      <div class="card">
+        <div class="card-header">{{ post.title|e }}</div>
+        <div class="card-body">
+          <p class="card-text">
+            {{ post.text|truncate(50, true) }}
+          </p>
+          <a href="{{ path('post_show', 
+            {id: post.id}) }}" class="btn btn-sm 
+            btn-primary float-right"
+            >{{ 'Read more'|trans }}</a>
+          <p class="card-text">
+            <small class="text-muted">
+            <strong>{{ post.user.name|e }}</strong>
+            &minus; {{ post.createdAt|date('d/m/Y H:i') }} &minus; {# post.comment.count #} comentários</small>
+          </p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+ 
+  <br>
+  {# Paginação #}
+  <div class="float-right">
+    {% include 'shared/simple-pagination.html.twig' with {
+      'route': 'posts', 
+      'total': total, 
+      'page': page, 
+      'limit': limit
+      } %}
+  </div>
+</div>
+{% endblock %}

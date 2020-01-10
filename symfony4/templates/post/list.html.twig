@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+ 
+{% block title %}{{ 'Posts'|trans }} | {{ parent() }}{% endblock %}
+ 
+{% block body %}
+<div class="container">
+  <div class="blog-header">
+    <a href="{{ path('admin_post_create') }}" 
+      class="btn btn-primary float-right"
+      >{{ 'Create'|trans }}</a>
+    <h2 class="blog-title">{{ 'Posts'|trans }}</h2>
+    <hr>
+  </div>
+ 
+  {% include 'shared/messages.html.twig' %}
+ 
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>{{ 'Id'|trans }}</th>
+        <th>{{ 'Title'|trans }}</th>
+        <th>{{ 'Created at'|trans }}</th>
+        <th>{{ 'Updated at'|trans }}</th>
+        <th>{{ 'Author'|trans }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in posts %}
+      <tr>
+        <td>{{ post.id }}</td>
+        <td>{{ post.title }}</td>
+        <td>{{ post.createdAt|date('d/m/Y H:i:s') }}</td>
+        <td>{{ post.updatedAt|date('d/m/Y H:i:s') }}</td>
+        <td>{{ post.user.name }}</td>
+        <td class="text-right text-nowrap">
+          <a class="btn btn-sm btn-secondary"
+            href="{{ path('admin_post_edit', {postId: post.id}) }}" >{{ 'Edit'|trans }}</a>
+ 
+          <a class="btn btn-sm btn-danger"
+            onclick="return confirm('{{ 'Delete post?'|trans }}')" 
+            href="{{ path('admin_post_delete', 
+            {postId: post.id, page: page}) }}" 
+            >{{ 'Delete'|trans }}</a>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td class="text-center text-info" 
+          colspan="6">
+        {{ 'There are no posts to display'|trans }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+ 
+  {% include 'shared/pagination.html.twig' with {
+    'route': 'admin_post_list', 
+    'total': total, 
+    'page': page, 
+    'limit': limit
+  } %}
+</div>
+{% endblock %}

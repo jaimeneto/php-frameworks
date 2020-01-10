@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+ 
+{% block title %}
+  {{ 'Please sign in'|trans }} | {{ parent() }}
+{% endblock %}
+ 
+{% block body %}
+<div class="container">
+  <form method="post">
+    {% if error %}
+      <div class="alert alert-danger">
+        {{ error.messageKey 
+        |trans(error.messageData, 'security') }}
+      </div>
+    {% endif %}
+        
+    <h1 class="h3 mb-3 font-weight-normal">
+      {{ 'Please sign in'|trans }}
+    </h1>
+ 
+    <div class="form-group">
+      <label for="inputEmail" class="sr-only"
+        >{{ 'Email'|trans }}</label>
+      <input type="email" 
+        value="{{ last_username }}" name="email"
+        placeholder="{{ 'Email'|trans }}" 
+        id="inputEmail"
+        class="form-control col-sm-3" 
+        required autofocus>
+    </div>
+ 
+    <div class="form-group">
+      <label for="inputPassword" class="sr-only">
+        {{ 'Password'|trans }}</label>
+      <input type="password" name="password" 
+        id="inputPassword" 
+        placeholder="{{ 'Password'|trans }}"
+        class="form-control col-sm-3" required>
+    </div>
+    
+    <div class="form-group form-check">
+      <input type="checkbox" 
+        class="form-check-input" 
+        name="_remember_me" id="_remember_me">
+      <label class="form-check-label"  
+        for="_remember_me"
+        >{{ 'Remember me'|trans }}</label>
+    </div>
+    
+    <input type="hidden" name="_csrf_token"
+      value="{{ csrf_token('authenticate') }}">
+ 
+    <button class="btn btn-lg btn-primary" 
+      type="submit">{{ 'Sign in'|trans }}
+    </button>
+  </form>
+</div>
+{% endblock %}

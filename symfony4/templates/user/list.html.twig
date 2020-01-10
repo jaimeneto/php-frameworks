@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+ 
+{% block title %}{{ 'Users'|trans }} | {{ parent() }}{% endblock %}
+ 
+{% block body %}
+<div class="container">
+  <div class="blog-header">
+    <h2 class="blog-title">{{ 'Users'|trans }}</h2>
+    <hr>
+  </div>
+ 
+  {% include 'shared/messages.html.twig' %}
+ 
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>{{ 'Id'|trans }}</th>
+        <th>{{ 'Name'|trans }}</th>
+        <th>{{ 'Email'|trans }}</th>
+        <th>{{ 'Created at'|trans }}</th>
+        <th>{{ 'Email verified at'|trans }}</th>
+        <th>{{ 'Accessed at'|trans }}</th>
+        <th>{{ 'Type'|trans }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.createdAt|date('d/m/Y H:i:s') }}</td>
+        <td>{{ user.emailVerifiedAt 
+         ? user.emailVerifiedAt|date('d/m/Y H:i:s') 
+         : '-'}}</td>
+        <td>{{ user.accessedAt 
+          ? user.accessedAt|date('d/m/Y H:i:s') 
+          : '-'}}</td>
+        <td>{{ 'ROLE_ADMIN' in user.roles 
+          ? 'admin' : 'user' }}</td>
+        <td class="text-right text-nowrap">
+          {% if app.user != user %}
+            {% if 'ROLE_ADMIN' not in user.roles 
+              and user.deletedAt is null %}
+              <a class="btn btn-sm btn-dark"
+                onclick="return confirm('{{ 'Turn user %name% into admin?'|trans({'%name%': user.name}) }}')" href="{{ path('admin_user_turnIntoAdmin', {userId: user.id, page: page}) }}" >{{ 'Turn Into Admin'|trans }}</a>
+ 
+              <a class="btn btn-sm btn-danger"
+                onclick="return confirm('{{ 'Send user %name% to trash?'|trans({'%name%': user.name}) }}')" href="{{ path('admin_user_delete', {userId: user.id, page: page}) }}" >{{ 'Delete'|trans }}</a>
+            {% endif %}
+ 
+            {% if user.deletedAt %}
+              <a class="btn btn-sm btn-warning"
+                onclick="return confirm('{{ 'Restore user %name%?'|trans({'%name%': user.name}) }}')" href="{{ path('admin_user_restore', {userId: user.id, page: page}) }}">{{ 'Restore'|trans }}</a>
+ 
+              <a class="btn btn-sm btn-danger"
+                onclick="return confirm('{{ 'Delete user %name% permanently?'|trans({'%name%': user.name}) }}')" href="{{ path('admin_user_destroy', {userId: user.id, page: page}) }}" >{{ 'Destroy'|trans }}</a>
+            {% endif %}
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+ 
+  {% include 'shared/pagination.html.twig' with {
+    'route': 'admin_user_list', 
+    'total': total, 
+    'page': page, 
+    'limit': limit
+  } %}
+</div>
+{% endblock %}

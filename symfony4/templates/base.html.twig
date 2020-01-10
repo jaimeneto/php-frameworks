@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}PHP Frameworks - Symfony{% endblock %}</title>
+{% block stylesheets %}
+<link rel="stylesheet"
+href="https://getbootstrap.com/docs/4.3/dist/css/bootstrap.min.css">
+<style type="text/css">
+body {
+  margin-top: 60px; 
+  padding-top: 20px;
+}
+</style>
+{% endblock %}
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-md 
+      navbar-dark fixed-top bg-dark">
+    <div class="container">
+      <a class="navbar-brand" 
+        href="{{ path('homepage') }}">
+        PHP Frameworks - Symfony
+      </a>
+      <button class="navbar-toggler" 
+        type="button" data-toggle="collapse" 
+        data-target="#mainNavbar" 
+        aria-controls="mainNavbar" 
+        aria-expanded="false" 
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse"  
+        id="mainNavbar">
+        {% include 'shared/navbar.html.twig' %}
+      </div>
+    </div>
+  </nav>
+  
+  <main role="main">
+    {% block body %}{% endblock %}
+  </main>
+  
+  {% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://getbootstrap.com/docs/4.3/dist/js/bootstrap.min.js"></script>
+  {% endblock %}
+ 
+</body>
+</html>

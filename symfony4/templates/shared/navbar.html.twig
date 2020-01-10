@@ -1,0 +1,55 @@
+<ul class="navbar-nav mr-auto">
+  {% if is_granted('ROLE_ADMIN') %}
+  <li class="nav-item{{ 'admin_user' 
+      in app.request.get('_route') 
+      ? ' active' }}">
+    <a class="nav-link" 
+      href="{{ path('admin_user') }}"
+      >{{ 'Users'|trans }}</a>
+  </li>
+  <li class="nav-item{{ 'admin_post' 
+      in app.request.get('_route') 
+      ? ' active' }}">
+    <a class="nav-link" 
+      href="{{ path('admin_post') }}"
+      >{{ 'Posts'|trans }}</a>
+  </li>
+  <li class="nav-item{{ 'admin_comment' 
+      in app.request.get('_route') 
+      ? ' active' }}">
+    <a class="nav-link" 
+      href="{{ path('admin_comment') }}"
+      >{{ 'Comments'|trans }}</a>
+  </li>
+  {% endif %}
+</ul>
+ 
+<ul class="navbar-nav">
+  {% if app.user %}
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        {{ app.user.name }}
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{{ path('app_logout') }}" 
+        class="nav-link"
+        >{{ 'Logout'|trans }}</a>
+    </li>
+  {% else %}
+    <li class="nav-item
+      {% if app.request.get('_route') == 
+      'user_register' %} active{% endif %}">
+      <a class="nav-link" 
+        href="{{ path('user_register') }}"
+        >{{ 'Register'|trans }}</a>
+    </li>
+    <li class="nav-item
+      {% if app.request.get('_route') == 
+      'app_login' %} active{% endif %}">
+      <a class="nav-link" 
+        href="{{ path('app_login') }}"
+        >{{ 'Login'|trans }}</a>
+    </li>
+  {% endif %}
+</ul>
