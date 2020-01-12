@@ -1,0 +1,42 @@
+<?php
+$title = $this->_('E-mail verification');
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+
+<?=$this->partial('partial/flashMessenger') ?>
+
+<?php
+$email = $form->get('email');
+$email->setAttribute('class', 'form-control');
+$email->setLabelAttributes(['class' => 'control-label']);
+
+// This provides CSS classes for the submit button:
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary btn-lg');
+
+$cancel = $form->get('cancel');
+$cancel->setAttribute('class', 'btn btn-default btn-lg');
+
+$form->setAttribute('action', $this->url('sendVerificationEmail'));
+$form->prepare();
+?>
+<div class="row">
+    <div class="col-md-6">
+        <?= $this->form()->openTag($form) ?>
+
+        <div class="form-group<?=$email->getMessages() ? ' has-error' : '' ?>">
+            <?= $this->formLabel($email); ?>
+            <?= $this->formElement($email) ?>
+            <?= $this->formElementErrors()->render($email, ['class' => 'help-block']) ?>
+        </div>
+
+        <?= $this->formSubmit($submit) ?>
+
+        <?= $this->formSubmit($cancel) ?>
+
+        <?= $this->formElement($form->get('csrf')) ?>
+        
+        <?= $this->form()->closeTag() ?>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<?php
+if ($this->posts):
+$i = 0;
+?>
+<br>
+<div class="row">
+
+  <?=$this->partial('partial/flashMessenger') ?>
+
+  <?php foreach ($posts as $post):
+  if ($i++ === 2):
+      $i = 1;
+      echo '</div><div class="row">';
+  endif; ?>
+  <div class="col-md-6">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">
+                  <?= $this->escapeHtml($post->title) ?>
+              </h3>
+          </div>
+          <div class="panel-body">
+              <p><?= $this->truncate($this->escapeHtml($post->text),
+                    200, ' [...]') ?></p>
+
+              <?php if ($this->access('blog.post.view')): ?>
+              <a href="<?= $this->url('viewPost',['id' => $post->id]) ?>"
+                  class="btn btn-sm btn-primary pull-right"><?=$this->_('Read more'); ?></a>
+              <?php endif; ?>
+              <p>
+                  <small class="text-muted">
+                      <strong><?= $post->user_name ?></strong>
+                      &minus; <?= $post->getCreatedAt('d/m/Y H:i') ?>
+                      &minus; <?= $post->comments_count ?> 
+                        <?= $post->comments_count == 1 
+                            ? $this->_('comment') : $this->_('comments') ?>
+                  </small>
+              </p>
+
+          </div>
+      </div>
+  </div>
+  <?php endforeach; ?>
+
+</div>
+<?php endif; ?>
+
+<div class="text-right">
+   <?= $this->paginationControl(
+       $this->posts,               // O objeto de paginação
+       'sliding',                  // O estilo de scrolling
+       'partial/simplePaginator',  // Caminho para a view de paginação
+       ['route' => 'home']         // A rota para a url dos links
+   ) ?>
+</div>

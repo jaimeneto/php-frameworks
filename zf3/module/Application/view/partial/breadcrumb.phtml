@@ -1,0 +1,22 @@
+<?php
+// Exibe apenas se for uma tela de administração
+if ($this->pages && $this->pages[0]->id === 'admin'): ?>
+    <ul class="breadcrumb">
+        <?php foreach ($this->pages as $key => $page):
+            // Exibe apenas se tiver Rótulo
+            if ($page->getLabel()): ?>
+                <li>
+                    <?php 
+                    // Exibe como link se não for a página atual
+                    if ($key < count($this->pages) - 1) : ?>
+                        <a href="<?= $page->getHref() ?>">
+                            <?= $this->_($page->getLabel()) ?>
+                        </a>
+                    <?php else: ?>
+                        <?= $this->_($page->getLabel()) ?>
+                    <?php endif; ?>
+                </li>
+            <?php endif;
+        endforeach; ?>
+    </ul>
+<?php endif; ?>

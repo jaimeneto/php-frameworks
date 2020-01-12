@@ -1,0 +1,48 @@
+<?php
+$title = 'Editar post';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+
+<?=$this->partial('partial/flashMessenger') ?>
+
+<?php
+$title = $form->get('title');
+$title->setAttribute('class', 'form-control');
+
+$text = $form->get('text');
+$text->setAttribute('class', 'form-control');
+$text->setAttribute('rows', '10');
+
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+
+$cancel = $form->get('cancel');
+$cancel->setAttribute('class', 'btn btn-default');
+
+$form->setAttribute('action', $this->url('post', [
+    'action' => 'edit',
+    'id'     => $id,
+]));
+$form->prepare();
+?>
+<?= $this->form()->openTag($form) ?>
+
+<div class="form-group">
+    <?= $this->formLabel($title) ?>
+    <?= $this->formElement($title) ?>
+    <?= $this->formElementErrors()->render($title, ['class' => 'help-block']) ?>
+</div>
+
+<div class="form-group">
+    <?= $this->formLabel($text) ?>
+    <?= $this->formElement($text) ?>
+    <?= $this->formElementErrors()->render($text, ['class' => 'help-block']) ?>
+</div>
+
+<?= $this->formSubmit($submit) ?>
+
+<?= $this->formSubmit($cancel) ?>
+<?= $this->formHidden($form->get('id')) ?>
+<?= $this->formElement($form->get('csrf')) ?>
+<?= $this->form()->closeTag() ?>

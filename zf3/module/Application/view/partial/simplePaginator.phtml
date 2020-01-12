@@ -1,0 +1,31 @@
+<?php if ($this->pageCount): ?>
+<div>
+   <ul class="pagination">
+       <!-- Link para a página anterior -->
+       <?php if (isset($this->previous)): ?>
+           <li>
+               <a href="<?= $this->url($this->route, [],
+                   ['query' => ['page' => $this->previous]]
+               ) ?>">&lsaquo; <?= $this->_('Previous Page') ?></a>
+           </li>
+       <?php else : ?>
+           <li class="disabled">
+               <a href="#">&lsaquo; <?= $this->_('Previous Page') ?></a>
+            </li>
+       <?php endif ?>
+
+       <!-- Link para a próxima página -->
+       <?php if (isset($this->next)): ?>
+           <li>
+               <a href="<?= $this->url($this->route, [],
+                   ['query' => ['page' => $this->next]]
+               ) ?>"><?= $this->_('Next Page') ?> &rsaquo;</a>
+           </li>
+       <?php else : ?>
+           <li class="disabled">
+               <a href="#"><?= $this->_('Next Page') ?> &rsaquo;</a>
+            </li>
+       <?php endif ?>
+   </ul>
+</div>
+<?php endif ?>

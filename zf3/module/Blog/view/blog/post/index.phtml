@@ -1,0 +1,57 @@
+<?php
+$title = $this->_('Posts');
+$this->headTitle($title);
+?>
+<h1>
+   <?= $this->escapeHtml($title) ?>
+
+    <?php if ($this->access('blog.post.add')): ?>
+    <a class="btn btn-primary pull-right" href="<?= $this->url('post', 
+        ['action' => 'add']) ?>">Cadastrar</a>
+    <?php endif; ?>
+</h1>
+
+<?=$this->partial('partial/flashMessenger') ?>
+
+<table class="table table- table-hover">
+<tr>
+   <th>Id</th>
+   <th>Título</th>
+   <th>Autor</th>
+   <th>Comentários</th>
+   <th>Criação</th>
+   <th>Atualização</th>
+   <th>&nbsp;</th>
+</tr>
+<?php foreach ($posts as $post) : ?>
+   <tr>
+       <td><?= $post->id ?></td>
+       <td><?= $this->escapeHtml($post->title) ?></td>
+       <td><?= $this->escapeHtml($post->user_name) ?></td>
+       <td><?= $post->comments_count ?: '-' ?></td>
+       <td><?= $post->getCreatedAt('d/m/Y H:i') ?></td>
+       <td><?= $post->getUpdatedAt('d/m/Y H:i') ?></td>
+       <td class="text-right text-nowrap">
+
+            <?php if ($this->access('blog.post.edit')): ?>
+            <a class="btn btn-primary btn-sm" href="<?= $this->url('post', 
+                ['action' => 'edit', 'id' => $post->id]) ?>">Editar</a>
+            <?php endif; ?>
+
+            <?php if ($this->access('blog.post.delete')): ?>
+            <a href="<?= $this->url('post', ['action' => 'delete', 
+                'id' => $post->id]) ?>" class="btn btn-danger btn-sm"
+                onclick="return confirm('Deseja Excluir?')">Excluir</a>
+            <?php endif; ?>
+            
+       </td>
+   </tr>
+<?php endforeach; ?>
+</table>
+
+<?= $this->paginationControl(
+   $this->posts,         // O objeto de paginação
+   'sliding',            // O estilo de scrolling
+   'partial/paginator',  // Caminho para a view de paginação
+   ['route' => 'post']   // A rota para a url dos links
+) ?>

@@ -1,0 +1,103 @@
+<br>
+<div class="card">
+  <div class="card-header"><?=$this->_('Comments') ?></div>
+
+  <div class="card-body">
+      <?php if ($this->access('blog.comment.list') && $items) : ?>
+      <table class="table">
+          <tbody>
+              <?php foreach($items as $comment): ?>
+              <?php if ($this->access('blog.comment.view', 
+                  ['comment' => $comment])): ?>
+              <tr <?=$comment->isApproved() ? '' : 'class="warning"' ?>>
+                  <td>
+                      <div>
+                          <strong><?=$this->escapeHtml(
+                              $comment->user_name) ?></strong>
+                          <small class="text-muted">&minus;
+                              <?=$comment->getCreatedAt('d/m/Y H:i') ?>
+                          </small>
+                          <?php if (!$comment->isApproved()): ?>
+                          <span class="badge badge-danger">
+                              Pendente de aprovação</span>
+                          <?php endif; ?>
+                      </div>
+                      <div><?=$this->escapeHtml($comment->text) ?></div>
+                  </td>
+                  <td>
+                      <?php if ($this->access('blog.comment.approve', 
+                        ['comment' => $comment])): ?>
+                      <a href="<?= $this->url('comment',
+                          ['action'=>'approve', 'id'=>$comment->id],
+                          ['query' => ['post_id' => $comment->post_id]]) ?>"
+                          class="btn btn-sm btn-primary"
+                          style="margin-bottom: 2px; width: 100%"
+                          onclick="return confirm('Deseja Aprovar?')"
+                          >Aprovar</a>
+                      <br>
+                      <?php endif; ?>
+
+                      <?php if ($this->access('blog.comment.delete', 
+                        ['comment' => $comment])): ?>
+                      <a href="<?= $this->url('comment',
+                          ['action' => 'delete', 'id' => $comment->id],
+                          ['query' =>['post_id'=>$comment->post_id]]) ?>"
+                          class="btn btn-sm btn-danger"
+                          style="margin-bottom: 2px; width: 100%"
+                          onclick="return confirm('Deseja Excluir?')"
+                          >Excluir</a>
+                      <?php endif; ?>
+                  </td>
+              </tr>
+              <?php endif; ?>
+              <?php endforeach; ?>
+          </tbody>
+      </table>
+      <?php endif; ?>
+  </div>
+
+  <div class="card-footer">
+      <?php if ($this->access('blog.comment.add')):
+          $text = $form->get('text');
+          $text->setAttribute('class', 'form-control');
+          $text->setAttribute('placeholder',
+              'Insira aqui os seus comentários');
+          $text->setAttribute('rows', '2');
+
+          // This provides CSS classes for the submit button:
+          $submit = $form->get('submit');
+          $submit->setAttribute('class', 'btn btn-primary');
+
+          $reset = $form->get('reset');
+          $reset->setAttribute('type', 'reset');
+          $reset->setAttribute('class', 'btn btn-default');
+
+          $form->setAttribute('action', $this->url('comment',
+              ['action' => 'add']));
+          $form->prepare();
+          ?>
+          <?= $this->form()->openTag($form) ?>
+
+          <div class="form-group">
+              <?= $this->formElement($text) ?>
+              <?= $this->formElementErrors()->render($text,
+                  ['class' => 'help-block']) ?>
+          </div>
+
+          <?= $this->formSubmit($submit) ?>
+
+          <?= $this->formButton($reset, 'Limpar') ?>
+          <?= $this->formHidden($form->get('post_id')) ?>
+          <?= $this->formElement($form->get('csrf')) ?>
+          <?= $this->form()->closeTag() ?>     
+
+      <?php else: ?>
+     <hr>
+     <p class="text-center">    
+        Você precisa efetuar <a href="<?= $this->url('login') ?>">login</a>
+        para poder inserir seus comentários!
+     </p>
+     <?php endif; ?>
+  </div>
+</div>
+<br>

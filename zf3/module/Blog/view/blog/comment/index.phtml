@@ -1,0 +1,55 @@
+<?php
+$title = $this->_('Comments');
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+
+<?=$this->partial('partial/flashMessenger') ?>
+
+<table class="table table- table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Título do Post</th>
+        <th>Usuário</th>
+        <th>Criação</th>
+        <th>Aprovação</th>
+        <th>&nbsp;</th>
+    </tr>
+    <?php foreach ($comments as $comment) : ?>
+        <tr>
+            <td><?= $comment->id ?></td>
+            <td><?= $this->escapeHtml($comment->post_title) ?></td>
+            <td><?= $this->escapeHtml($comment->user_name) ?></td>
+            <td><?= $comment->getCreatedAt('d/m/Y H:i') ?></td>
+            <td><?= $comment->getApprovedAt('d/m/Y H:i') ?></td>
+            <td class="text-right text-nowrap">
+
+                <?php if ($this->access('blog.comment.approve', 
+                    ['comment' => $comment])): ?>
+                <a href="<?= $this->url('comment', 
+                    ['action' => 'approve', 'id' => $comment->id]) ?>" 
+                    class="btn btn-primary btn-sm"                    
+                    onclick="return confirm('Deseja Aprovar?')"
+                    >Aprovar</a>
+                <?php endif; ?>
+
+                <?php if ($this->access('blog.comment.delete', 
+                    ['comment' => $comment])): ?>
+                <a href="<?= $this->url('comment', 
+                    ['action' => 'delete', 'id' => $comment->id]) ?>"
+                    class="btn btn-danger btn-sm"  
+                    onclick="return confirm('Deseja Excluir?')"
+                    >Excluir</a>
+                <?php endif; ?>
+
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+
+<?= $this->paginationControl(
+   $this->comments,       // O objeto de paginação
+   'sliding',             // O estilo de scrolling
+   'partial/paginator',   // Caminho para a view de paginação
+   ['route' => 'comment'] // A rota para a url dos links
+) ?>

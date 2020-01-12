@@ -1,0 +1,32 @@
+<?php
+use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
+
+$flash = $this->flashMessenger();
+
+// Formata as mensagens como queremos que sejam exibidas
+$flash->setMessageOpenFormat('<div%s role="alert"><button type="button"
+class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span></button>');
+$flash->setMessageSeparatorString('<hr>');
+$flash->setMessageCloseString('</div>');
+
+$namespaces = [
+    FlashMessenger::NAMESPACE_ERROR   => 'danger', 
+    FlashMessenger::NAMESPACE_WARNING => 'warning', 
+    FlashMessenger::NAMESPACE_DEFAULT => 'warning',
+    FlashMessenger::NAMESPACE_INFO    => 'info', 
+    FlashMessenger::NAMESPACE_SUCCESS => 'success'
+];
+
+foreach($namespaces as $namespace => $cssClass):
+    $cssClasses = ['alert', 'alert-dismissible', 'alert-' . $cssClass];
+
+    // Exibe as mensagens inseridas na última requisição
+    echo $flash->render($namespace, $cssClasses);
+    
+    // Exibe as mensagens inseridas nessa mesma requisição
+    echo $flash->renderCurrent($namespace, $cssClasses);
+endforeach;
+
+// Limpa as mensagens inseridas nessa requisição
+$flash->getPluginFlashMessenger()->clearCurrentMessagesFromContainer();

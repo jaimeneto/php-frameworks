@@ -1,0 +1,22 @@
+<div>
+    <h3 class="card-header"><?= $this->escapeHtml($post->title) ?></h3>
+
+    <?=$this->partial('partial/flashMessenger') ?>
+
+    <div class="well text-justify">
+        <p><?= $this->escapeHtml($post->text) ?></p>
+
+        <div class="text-right">
+            <strong><?= $this->escapeHtml($user->name) ?></strong>
+            <small class="text-muted">
+                &minus; <?= $post->getCreatedAt('d/m/Y H:i') ?>
+            </small>
+        </div>
+    </div>
+</div>
+
+<?= $this->partial('blog/comment/form', [
+  'postId' => $post->id,
+  'items'  => $post->getComments(),
+  'form'   => $form
+]) ?>
